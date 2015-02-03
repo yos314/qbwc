@@ -2,7 +2,7 @@ module QBWC
   class Worker
 
     def requests(job)
-      []
+      return nil
     end
 
     def should_run?(job)

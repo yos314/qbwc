@@ -1,9 +1,14 @@
 class QBWC::ActiveRecord::Job < QBWC::Job
   class QbwcJob < ActiveRecord::Base
     validates :name, :uniqueness => true, :presence => true
-    serialize :requests, Array
-    serialize :data
-
+    if ActiveRecord::VERSION::MAJOR > 4 || (ActiveRecord::VERSION::MINOR >= 2 && ActiveRecord::VERSION::MAJOR == 4)
+      #serialize :requests, Array
+      #serialize :data
+    else
+      serialize :requests, Array
+      serialize :data
+    end
+    
     def to_qbwc_job
       QBWC::ActiveRecord::Job.new(name, enabled, company, worker_class, requests, data)
     end
@@ -17,16 +22,23 @@ class QBWC::ActiveRecord::Job < QBWC::Job
     ar_job = find_ar_job_with_name(name).first_or_initialize
     ar_job.company = company
     ar_job.enabled = enabled
+    if requests.nil? then
+      ar_job.requests = nil
+    else
+      ar_job.requests = requests.is_a?(Array) ? requests : [requests]
+    end
+    ar_job.requests_provided_when_job_added = (! requests.nil? && ! requests.empty?)
     ar_job.request_index = 0
     ar_job.worker_class = worker_class
+    ar_job.data = data
     ar_job.save!
 
-    jb = self.new(name, enabled, company, worker_class, requests, data)
-    jb.requests = requests.is_a?(Array) ? requests : [requests] unless requests.nil?
-    jb.requests_provided_when_job_added = (! requests.nil? && ! requests.empty?)
-    jb.data = data
+    # jb = self.new(name, enabled, company, worker_class, requests, data)
+    # jb.requests = requests.is_a?(Array) ? requests : [requests] unless requests.nil?
+    # jb.requests_provided_when_job_added = (! requests.nil? && ! requests.empty?)
+    # jb.data = data
 
-    jb
+    # jb
   end
 
   def self.find_job_with_name(name)

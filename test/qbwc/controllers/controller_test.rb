@@ -54,9 +54,9 @@ class QBWCControllerTest < ActionController::TestCase
         assert_equal QBWC_USERNAME, session.user
         assert_equal 0, session.progress
         assert_nil session.error
-        #assert_not_nil session.current_job
-        #assert_not_nil session.pending_jobs
-        #assert_equal 1, session.pending_jobs.count
+        # assert_not_nil session.current_job
+        # assert_not_nil session.pending_jobs
+        # assert_equal 1, session.pending_jobs.count
      end
 
     _authenticate_with_queued_job

@@ -10,7 +10,7 @@ class RoutesTest < ActionDispatch::IntegrationTest
 
   test "qwc" do
     #_inspect_routes
-    get 'qbwc/qwc'
+    get '/qbwc/qwc'
 
     assert_match /QBWCXML/,                                                 @response.body
     assert_match /AppName.*QbwcTestApplication development.*AppName/,       @response.body
@@ -22,7 +22,7 @@ class RoutesTest < ActionDispatch::IntegrationTest
 
   test "qbwc/action without soap returns successfully" do
     #_inspect_routes
-    get 'qbwc/action'
+    get '/qbwc/action'
     assert_response :success
   end
 

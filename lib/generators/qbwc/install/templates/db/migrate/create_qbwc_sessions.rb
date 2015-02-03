@@ -10,7 +10,7 @@ class CreateQbwcSessions < ActiveRecord::Migration
       t.string :error, :limit => 1000
       t.string :pending_jobs, :limit => 1000, :null => false, :default => ''
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

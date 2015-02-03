@@ -9,7 +9,7 @@ class CreateQbwcJobs < ActiveRecord::Migration
       t.text :requests
       t.boolean :requests_provided_when_job_added, :null => false, :default => false
       t.text :data
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

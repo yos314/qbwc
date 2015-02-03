@@ -35,6 +35,7 @@ module QbwcTestApplication
   class Application < Rails::Application
     Rails.application.configure do
       config.secret_key_base = "stub"
+      config.active_support.test_order = :random
     end
     ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
     require '../qbwc/lib/generators/qbwc/install/templates/db/migrate/create_qbwc_jobs'
@@ -69,7 +70,7 @@ QbwcTestApplication::Application.routes.draw do
   wash_out :qbwc
 
   # Route needed for test_qwc 
-  get 'qbwc/action' => 'qbwc#action'
+  #get 'qbwc/action' => 'qbwc#action'
 
   # Stub a root route
   root :to => "qbwc#qwc"
